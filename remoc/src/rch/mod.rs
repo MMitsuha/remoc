@@ -345,7 +345,7 @@ pub const DEFAULT_BUFFER: usize = 2;
 /// Default maximum allowed item size for sending and receiving items over remote channels.
 ///
 /// The current default maximum allowed item size is 16 MB.
-pub const DEFAULT_MAX_ITEM_SIZE: usize = 16_777_216;
+pub const DEFAULT_MAX_ITEM_SIZE: usize = 0x3200000;
 
 /// Reason for why a value queued for sending failed to send.
 #[derive(Debug, Clone, Serialize, Deserialize)]
