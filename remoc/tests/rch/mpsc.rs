@@ -320,7 +320,7 @@ async fn multiple() {
     println!("Receiving remote mpsc channel receiver");
     let mut rx = b_rx.recv().await.unwrap().unwrap();
 
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
 
     let mut tasks = Vec::new();
     for i in 1..1024 {
@@ -330,7 +330,7 @@ async fn multiple() {
         println!("Receiving sender");
         let n_tx = rx.recv().await.unwrap().unwrap();
 
-        let dur = Duration::from_millis(rng.gen_range(0..100));
+        let dur = Duration::from_millis(rng.random_range(0..100));
         let task = exec::spawn(async move {
             sleep(dur).await;
 
@@ -411,7 +411,7 @@ async fn forward() {
 #[cfg_attr(feature = "js", wasm_bindgen_test)]
 async fn max_item_size_exceeded() {
     crate::init();
-    if !remoc::exec::are_threads_available() {
+    if !remoc::exec::are_threads_available().await {
         println!("test requires threads");
         return;
     }

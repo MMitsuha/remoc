@@ -60,9 +60,9 @@ async fn big_msg() {
         }
     });
 
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     for _ in 1..10 {
-        let size = rng.gen_range(0..1_000_000);
+        let size = rng.random_range(0..1_000_000);
         let mut data = vec![0u8; size];
         rng.fill_bytes(&mut data);
 
@@ -73,7 +73,7 @@ async fn big_msg() {
             println!("Send error: {err}");
             match &err.kind {
                 SendErrorKind::Serialize(ser) if ser.0.is::<StreamingUnavailable>() => {
-                    if !remoc::exec::are_threads_available() {
+                    if !remoc::exec::are_threads_available().await {
                         println!("Okay, because no threads available");
                         return;
                     }
@@ -110,9 +110,9 @@ async fn tcp_big_msg() {
         }
     });
 
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     for _ in 1..10 {
-        let size = rng.gen_range(0..1_000_000);
+        let size = rng.random_range(0..1_000_000);
         let mut data = vec![0u8; size];
         rng.fill_bytes(&mut data);
 
@@ -169,7 +169,7 @@ async fn oversized_msg_send_error() {
     println!("Sending message of length {}", data.len());
     let res = a_tx.send(data).await;
 
-    if remoc::exec::are_threads_available() {
+    if remoc::exec::are_threads_available().await {
         assert!(
             matches!(res, Err(SendError { kind: SendErrorKind::MaxItemSizeExceeded, .. })),
             "sending oversized item must fail"

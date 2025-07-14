@@ -4,6 +4,33 @@ All notable changes to Remoc will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.15.5 - 2025-07-10
+### Fixed
+- missing docs warnings in remote traits by Fabian
+
+## 0.15.4 - 2025-06-27
+### Fixed
+- remotely observable collections: workaround for possibly incorrect sync
+  due to serde issue serde-rs/serde#2224 when using non-self-describing
+  codecs like postcard
+
+## 0.15.3 - 2025-03-21
+### Fixed
+- base receiver: cancel safety
+
+## 0.15.2 - 2025-03-21
+### Fixed
+- threads: make availability test async
+
+## 0.15.1 - 2025-03-07
+### Added
+- codec: Bincode 2 support
+### Changed
+- flush send buffer when flow credits are returned to solve a potential
+  bandwidth bottleneck
+- update rand dependency to 0.9
+- update getrandom dependency to 0.3
+
 ## 0.15.0 - 2025-01-16
 ### Added
 - support for WebAssembly targets wasm32-unknown-unknown, wasm32-wasip1 and
